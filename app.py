@@ -1,10 +1,18 @@
 import streamlit as st
 
+from database.database import create_tables
+
+
+# Create database tables when the application starts
+create_tables()
+
+
 st.set_page_config(
     page_title="AI Personal Assistant",
     page_icon="🤖",
     layout="wide"
 )
+
 
 st.title("🤖 AI Personal Assistant")
 
@@ -27,3 +35,8 @@ if st.button("Send"):
         st.info("AI functionality will be connected soon.")
     else:
         st.warning("Please enter a message.")
+
+
+st.divider()
+
+st.success("✅ SQLite database connected successfully!")
