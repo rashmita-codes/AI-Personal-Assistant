@@ -15,6 +15,8 @@ from modules.notes import (
     delete_note
 )
 
+from modules.ai import ask_ai
+
 
 # Create database tables
 create_tables()
@@ -46,16 +48,33 @@ st.divider()
 # CHAT
 # -------------------------------
 
-st.subheader("💬 Chat")
+# -------------------------------
+# AI CHAT
+# -------------------------------
+
+st.subheader("💬 Chat with AI")
 
 message = st.text_input(
     "Enter your message",
-    placeholder="Ask your assistant something..."
+    placeholder="Ask your AI assistant anything..."
 )
 
-if st.button("Send"):
-    if message:
-        st.info("AI functionality will be connected soon.")
+if st.button("🤖 Ask AI"):
+
+    if message.strip():
+
+        with st.spinner("Thinking..."):
+
+            try:
+                response = ask_ai(message)
+
+                st.write("### 🤖 Assistant")
+                st.write(response)
+
+            except Exception as e:
+                st.error("Something went wrong while contacting the AI.")
+                st.caption(str(e))
+
     else:
         st.warning("Please enter a message.")
 
