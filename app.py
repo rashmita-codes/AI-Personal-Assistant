@@ -16,6 +16,7 @@ from modules.notes import (
 )
 
 from modules.ai import ask_ai
+from modules.nlp import detect_intent
 
 
 # Create database tables
@@ -49,7 +50,7 @@ st.divider()
 # -------------------------------
 
 # -------------------------------
-# AI CHAT
+# AI CHAT + NLP
 # -------------------------------
 
 st.subheader("💬 Chat with AI")
@@ -63,21 +64,85 @@ if st.button("🤖 Ask AI"):
 
     if message.strip():
 
-        with st.spinner("Thinking..."):
+        # Detect user's intention
+        intent = detect_intent(message)
 
-            try:
-                response = ask_ai(message)
+        st.caption(f"Detected intent: {intent}")
 
-                st.write("### 🤖 Assistant")
-                st.write(response)
+        # -------------------------
+        # CHAT
+        # -------------------------
 
-            except Exception as e:
-                st.error("Something went wrong while contacting the AI.")
-                st.caption(str(e))
+        if intent == "CHAT":
+
+            with st.spinner("🤖 Thinking..."):
+
+                try:
+
+                    response = ask_ai(message)
+
+                    st.write("### 🤖 Assistant")
+                    st.write(response)
+
+                except Exception as e:
+
+                    st.error(
+                        "Something went wrong while contacting the AI."
+                    )
+
+                    st.caption(str(e))
+
+        # -------------------------
+        # TASK
+        # -------------------------
+
+        elif intent == "TASK":
+
+            st.info(
+                "📋 I detected that you want to create a task."
+            )
+
+            st.write(
+                "Task automation will be connected in the next step."
+            )
+
+        # -------------------------
+        # NOTE
+        # -------------------------
+
+        elif intent == "NOTE":
+
+            st.info(
+                "📝 I detected that you want to create a note."
+            )
+
+            st.write(
+                "Note automation will be connected in the next step."
+            )
+
+        # -------------------------
+        # LIST TASKS
+        # -------------------------
+
+        elif intent == "LIST_TASKS":
+
+            st.info(
+                "📋 I detected that you want to see your tasks."
+            )
+
+        # -------------------------
+        # LIST NOTES
+        # -------------------------
+
+        elif intent == "LIST_NOTES":
+
+            st.info(
+                "📝 I detected that you want to see your notes."
+            )
 
     else:
-        st.warning("Please enter a message.")
 
+        st.warning("Please enter a message.")
 
 st.divider()
 
