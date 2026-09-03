@@ -1,11 +1,18 @@
 import streamlit as st
 
 from database.database import create_tables
+
 from modules.tasks import (
     add_task,
     get_tasks,
     complete_task,
     delete_task
+)
+
+from modules.notes import (
+    add_note,
+    get_notes,
+    delete_note
 )
 
 
@@ -176,6 +183,100 @@ else:
                 ):
 
                     delete_task(task_id)
+                    st.rerun()
+
+            st.divider()
+            # -------------------------------
+# NOTES MANAGER
+# -------------------------------
+
+st.divider()
+
+st.subheader("📝 Notes Manager")
+
+
+# Create a new note
+with st.form("note_form"):
+
+    note_title = st.text_input(
+        "Note title",
+        placeholder="Example: Python Important Concepts"
+    )
+
+    note_content = st.text_area(
+        "Note content",
+        placeholder="Write your note here..."
+    )
+
+    save_note = st.form_submit_button(
+        "💾 Save Note"
+    )
+
+    if save_note:
+
+        if note_title.strip() and note_content.strip():
+
+            add_note(
+                note_title,
+                note_content
+            )
+
+            st.success("✅ Note saved successfully!")
+
+        else:
+
+            st.warning(
+                "Please enter both a title and note content."
+            )
+
+
+# -------------------------------
+# DISPLAY NOTES
+# -------------------------------
+
+st.write("### 📚 Your Notes")
+
+notes = get_notes()
+
+
+if not notes:
+
+    st.info(
+        "No notes yet. Create your first note above!"
+    )
+
+else:
+
+    for note in notes:
+
+        note_id = note[0]
+        title = note[1]
+        content = note[2]
+        created_at = note[3]
+
+        with st.container():
+
+            col1, col2 = st.columns([5, 1])
+
+            with col1:
+
+                st.write(f"**{title}**")
+
+                st.write(content)
+
+                st.caption(
+                    f"Created: {created_at}"
+                )
+
+            with col2:
+
+                if st.button(
+                    "🗑️ Delete",
+                    key=f"delete_note_{note_id}"
+                ):
+
+                    delete_note(note_id)
+
                     st.rerun()
 
             st.divider()
