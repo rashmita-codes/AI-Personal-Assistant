@@ -226,3 +226,43 @@ def extract_task_details(message):
         due_date = due_date.strftime("%Y-%m-%d")
 
     return task_title, priority, due_date
+def extract_note(message):
+    """
+    Extract note content from a natural language message.
+    """
+
+    original_message = message.strip()
+    message_lower = original_message.lower()
+
+    prefixes = [
+        "save a note that ",
+        "save a note ",
+        "save note that ",
+        "save note ",
+        "add a note that ",
+        "add a note ",
+        "add note that ",
+        "add note ",
+        "create a note that ",
+        "create a note ",
+        "create note that ",
+        "create note ",
+        "make a note that ",
+        "make a note ",
+        "make note that ",
+        "make note ",
+        "remember that ",
+        "remember this "
+    ]
+
+    for prefix in prefixes:
+
+        if message_lower.startswith(prefix):
+
+            note_content = original_message[
+                len(prefix):
+            ].strip()
+
+            return note_content
+
+    return original_message
