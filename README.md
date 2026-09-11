@@ -2,6 +2,10 @@
 
 An intelligent AI-powered personal assistant built using Python, Streamlit, Generative AI, NLP, and SQLite. The application allows users to interact with an AI assistant, manage tasks, save notes, track progress, and organize daily activities from a single dashboard.
 
+## 🚀 Live Demo
+
+👉 [Open AI Personal Assistant](ai-personal-assistant-b48q4bcrpyonm5d8pkuveh.streamlit.app)
+
 📌 Project Overview
 
 The AI Personal Assistant is designed to combine conversational AI with everyday productivity tools.
