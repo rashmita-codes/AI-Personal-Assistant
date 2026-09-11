@@ -3,14 +3,13 @@ import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 
-# Load local .env file
 load_dotenv()
 
-# Get API key from Streamlit Secrets when deployed,
-# otherwise get it from .env locally
-if "GEMINI_API_KEY" in st.secrets:
+# Try Streamlit Cloud Secrets
+try:
     api_key = st.secrets["GEMINI_API_KEY"]
-else:
+except Exception:
+    # Use local .env if Streamlit Secrets are not available
     api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
