@@ -4,7 +4,7 @@ An intelligent AI-powered personal assistant built using Python, Streamlit, Gene
 
 ## 🚀 Live Demo
 
-👉 [Open AI Personal Assistant](ai-personal-assistant-b48q4bcrpyonm5d8pkuveh.streamlit.app)
+👉 [Open AI Personal Assistant](https://ai-personal-assistant-b48q4bcrpyonm5d8pkuveh.streamlit.app)
 
 📌 Project Overview
 
